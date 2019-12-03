@@ -15,22 +15,26 @@ import (
 
 var Client *mongo.Client
 
-func Test() {
+func Test() interface{} {
 	fmt.Println("connect & insert db")
+	return insertNumber()
 }
 
 func init() {
 
 	connect()
-	insertNunber()
+
 }
 
-func insertNunber() {
+func insertNumber() interface{} {
 	collection := Client.Database("testing").Collection("numbers")
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	res, _ := collection.InsertOne(ctx, bson.M{"name": "pi", "value": 3.14159})
+	res, err := collection.InsertOne(ctx, bson.M{"name": "pi", "value": 3.14159})
+	if err != nil {
+		return nil
+	}
 	id := res.InsertedID
-	fmt.Println(id)
+	return id
 }
 
 func connect() {
