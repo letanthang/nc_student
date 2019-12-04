@@ -16,6 +16,7 @@ import (
 var Client *mongo.Client
 
 func Test() interface{} {
+	//
 	fmt.Println("connect & insert db")
 	return insertNumber()
 }
