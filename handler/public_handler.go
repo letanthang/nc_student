@@ -16,21 +16,11 @@ func TestDB(c echo.Context) error {
 }
 
 func GetAllStudents(c echo.Context) error {
-	type Student struct {
-		FirstName string `json:"first_name"`
-		LastName  string `json:"last_name"`
-		ClassName string `json:"class_name"`
-		Email     string `json:"email"`
-		Age       int    `json:"age"`
-	}
+
 	inputJson := `[{"first_name":"Tam","last_name":"Nguyen","age":100,"email":"tamnguyen@gmail.com"},{"first_name": "Hieu", "last_name": "Nguyen", "age":200,"email":"hieunguyen@gmail.com"}]`
 
-	var students []Student
+	var students []db.Student
 	json.Unmarshal([]byte(inputJson), &students)
 
 	return c.JSON(http.StatusOK, students)
-}
-
-func AddStudent(c echo.Context) error {
-	return c.JSON(http.StatusOK, db.Test)
 }

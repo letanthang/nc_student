@@ -16,7 +16,8 @@ func Private(e *echo.Echo) {
 }
 
 func Staff(e *echo.Echo) {
-
+	g := e.Group("/api/student/v1/staff")
+	g.POST("/student", handler.AddStudent)
 }
 
 func Public(e *echo.Echo) {
@@ -24,5 +25,5 @@ func Public(e *echo.Echo) {
 	g.GET("/health", handler.HealthCheck)
 	g.GET("/test", handler.TestDB)
 	g.GET("/student", handler.GetAllStudents)
-	g.POST("/student", handler.AddStudent)
+
 }

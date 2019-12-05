@@ -15,6 +15,11 @@ import (
 
 var Client *mongo.Client
 
+const (
+	DbName  = "golang11"
+	ColName = "student"
+)
+
 func Test() interface{} {
 	//
 	fmt.Println("connect & insert db")
@@ -39,14 +44,17 @@ func insertNumber() interface{} {
 }
 
 func connect() {
-	client, err := mongo.NewClient(options.Client().ApplyURI(config.Config.Mongo.Uri))
-	if err != nil {
-		log.Fatalf("connect error :%v", err)
-	}
+	clientOptions := options.Client().ApplyURI(config.Config.Mongo.Uri)
+	clientOptions.SetMaxPoolSize(500)
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	err = client.Connect(ctx)
+	client, err := mongo.Connect(ctx, clientOptions)
+	if err != nil {
+		log.Fatalf("connect error: %v", err)
+	}
 	ctx, _ = context.WithTimeout(context.Background(), 2*time.Second)
 	err = client.Ping(ctx, readpref.Primary())
-
+	if err != nil {
+		log.Fatalf("ping error: %v", err)
+	}
 	Client = client
 }
