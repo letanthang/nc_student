@@ -18,6 +18,7 @@ func Private(e *echo.Echo) {
 func Staff(e *echo.Echo) {
 	g := e.Group("/api/student/v1/staff")
 	g.POST("/student", handler.AddStudent)
+	g.PUT("/student", handler.UpdateStudent)
 }
 
 func Public(e *echo.Echo) {
