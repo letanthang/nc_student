@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"encoding/json"
+	"net/http"
+
 	"github.com/labstack/echo/v4"
 	"github.com/letanthang/nc_student/db"
-	"net/http"
 )
 
 func HealthCheck(c echo.Context) error {
@@ -16,11 +16,14 @@ func TestDB(c echo.Context) error {
 }
 
 func GetAllStudents(c echo.Context) error {
+	// var students []db.Student
+	// inputJson := `[{"first_name":"Tam","last_name":"Nguyen","age":100,"email":"tamnguyen@gmail.com"},{"first_name": "Hieu", "last_name": "Nguyen", "age":200,"email":"hieunguyen@gmail.com"}]`
+	// json.Unmarshal([]byte(inputJson), &students)
 
-	inputJson := `[{"first_name":"Tam","last_name":"Nguyen","age":100,"email":"tamnguyen@gmail.com"},{"first_name": "Hieu", "last_name": "Nguyen", "age":200,"email":"hieunguyen@gmail.com"}]`
-
-	var students []db.Student
-	json.Unmarshal([]byte(inputJson), &students)
+	students, err := db.GetAllStudent()
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, db.Error{Code: http.StatusBadRequest, Msg: "bad request"})
+	}
 
 	return c.JSON(http.StatusOK, students)
 }

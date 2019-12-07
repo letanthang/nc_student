@@ -45,7 +45,9 @@ func insertNumber() interface{} {
 
 func connect() {
 	clientOptions := options.Client().ApplyURI(config.Config.Mongo.Uri)
-	clientOptions.SetMaxPoolSize(500)
+	clientOptions.SetMaxPoolSize(100)
+	clientOptions.SetMinPoolSize(4)
+	clientOptions.SetReadPreference(readpref.Nearest())
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
