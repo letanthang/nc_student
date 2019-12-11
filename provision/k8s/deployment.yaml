@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cont
-          image: hoanghaihadocker/nc_student
+          image: letanthang/nc_student
           ports:
             - containerPort: 9090
               name: web

@@ -7,6 +7,6 @@ spec:
     app: thangle
   ports:
     - protocol: TCP
-      port: 9091
+      port: 9090
       targetPort: 9090
   type: LoadBalancer

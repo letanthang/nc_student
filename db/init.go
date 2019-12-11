@@ -44,6 +44,7 @@ func insertNumber() interface{} {
 }
 
 func connect() {
+	log.Println("Try to connect mongo:", config.Config.Mongo.Uri)
 	clientOptions := options.Client().ApplyURI(config.Config.Mongo.Uri)
 	clientOptions.SetMaxPoolSize(100)
 	clientOptions.SetMinPoolSize(4)
@@ -53,7 +54,7 @@ func connect() {
 	if err != nil {
 		log.Fatalf("connect error: %v", err)
 	}
-	ctx, _ = context.WithTimeout(context.Background(), 2*time.Second)
+	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 	err = client.Ping(ctx, readpref.Primary())
 	if err != nil {
 		log.Fatalf("ping error: %v", err)

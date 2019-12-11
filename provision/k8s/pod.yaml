@@ -6,7 +6,7 @@ metadata:
     app: student
 spec:
   containers:
-    - image: hoanghaihadocker/nc_student
+    - image: letanthang/nc_student
       name: gocontainer
       ports:
         - containerPort: 9090
