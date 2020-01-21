@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"time"
@@ -32,11 +31,31 @@ func GetAllStudent() (*[]Student, error) {
 
 func SearchStudentSimple(req StudentSearchRequest) (*[]Student, error) {
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	var filter bson.M
-	bs, err := json.Marshal(req)
-	err = json.Unmarshal(bs, &filter)
-	if err != nil {
-		log.Printf("marshal error: %v", err)
+	// var filter bson.M
+	// bs, err := json.Marshal(req)
+	// err = json.Unmarshal(bs, &filter)
+	// if err != nil {
+	// 	log.Printf("marshal error: %v", err)
+	// }
+
+	filter := bson.M{}
+	if req.ID != 0 {
+		filter["id"] = req.ID
+	}
+
+	if req.LastName != "" {
+		filter["last_name"] = req.LastName
+	}
+
+	if req.FirstName != "" {
+		filter["first_name"] = req.FirstName
+	}
+
+	if req.ClassName != "" {
+		filter["class_name"] = req.ClassName
+	}
+	if req.Age != 0 {
+		filter["age"] = req.Age
 	}
 
 	fmt.Println(filter)
